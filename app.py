@@ -3,6 +3,7 @@ from flask import Flask, jsonify
 from flask_restful import Api
 from common.apiException import APIException
 from resources.login import Login
+from config import config
 
 app = Flask(__name__)
 
@@ -15,12 +16,11 @@ def handle_api_exception(error):
 
 
 # 各项插件的配置
-app.config['SECRET_KEY'] = 'kang5590169'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:kang5590169@198.13.54.223/api'  # 配置数据库
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+app.config['SECRET_KEY'] = config['SECRET_KEY']
+app.config['SQLALCHEMY_DATABASE_URI'] = config['SQLALCHEMY_DATABASE_URI']  # 配置数据库
 
-# api = Api(app)
-# api.add_resource(Login, '/login')
+api = Api(app)
+api.add_resource(Login, '/login')
 
 if __name__ == '__main__':
     from database import db
